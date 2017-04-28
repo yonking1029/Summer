@@ -1,0 +1,5 @@
+<html>
+<body>
+    <h5>你好， ${username}, 这是一封模板邮件!</h5>
+</body>
+</html>
