@@ -16,21 +16,24 @@ public class SystemConfigs {
 	/**
 	 * 是否显示请求参数
 	 */
-    @Value("${com.oil.comm.configs.show_request_params}")
+    @Value("${configs.show_request_params}")
     public Boolean show_request_params = false;
     /**
      * 是否显示响应结果
      */
-    @Value("${com.oil.comm.configs.show_response_datas}")
+    @Value("${configs.show_response_datas}")
     public Boolean show_response_datas = false;
+    
+    /**
+     * 是否显示响应结果
+     */
+    @Value("${configs.response_data_format}")
+    public Boolean response_data_format = false;
     /**
      * 日志切面配置
      */
-    @Value("${com.oil.comm.aspect.pointcut}")
+    @Value("${configs.aspect.pointcut}")
     public String aspect_pointcut = "";
-    
-    @Value("${com.oil.comm.configs.logger2mongo}")
-    public Boolean logger2mongo = false;
     
 	public Boolean getShow_request_params() {
 		return show_request_params;
@@ -50,11 +53,11 @@ public class SystemConfigs {
 	public void setAspect_pointcut(String aspect_pointcut) {
 		this.aspect_pointcut = aspect_pointcut;
 	}
-	public Boolean getLogger2mongo() {
-		return logger2mongo;
+	public Boolean getResponse_data_format() {
+		return response_data_format;
 	}
-	public void setLogger2mongo(Boolean logger2mongo) {
-		this.logger2mongo = logger2mongo;
+	public void setResponse_data_format(Boolean response_data_format) {
+		this.response_data_format = response_data_format;
 	}
 	
 }

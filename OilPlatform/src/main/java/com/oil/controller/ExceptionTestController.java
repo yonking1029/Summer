@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oil.comm.dto.ReturnDTO;
 import com.oil.comm.exception.MyException;
 
 /**
@@ -22,21 +23,21 @@ public class ExceptionTestController {
     public String t1() throws Exception {
         throw new Exception("发生错误");
     }
-//    http://127.0.0.1:8080/t1
+//	http://127.0.0.1:8080/exception/t3
     @RequestMapping("/t2")
-    public String t2() throws MyException {
-        throw new MyException("发生错误");
+    public ReturnDTO t2() throws MyException {
+        try {
+        	int i = 1/0;
+        	int j = 0/1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new MyException("发生错误",e);
+		}
+        return ReturnDTO.Success();
     }
-//   http://127.0.0.1:8080/t3
+//	http://127.0.0.1:8080/exception/t3
     @RequestMapping("/t3")
     public String t3() throws MyException {
         throw new MyException("发生错误",new Exception("错误内容"));
     }
-//    http://127.0.0.1:8080/
-    @RequestMapping("/")
-    public String index(ModelMap map) {
-        map.addAttribute("host", "...");
-        return "index";
-    }
-
 }
