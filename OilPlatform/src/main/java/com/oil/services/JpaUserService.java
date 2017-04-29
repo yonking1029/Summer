@@ -34,5 +34,7 @@ public interface JpaUserService {
 	
 	@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, rollbackFor=Exception.class)
 	void testTransaction();
+	
+//	List list();
 
 }

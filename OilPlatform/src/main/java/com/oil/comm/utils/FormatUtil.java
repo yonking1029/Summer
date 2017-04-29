@@ -12,8 +12,9 @@ public final class FormatUtil {
 	public static void printJson(String jsonStr){
 		System.out.println(formatJson(jsonStr));
 	}
-	public static String getJsonFormatString(String jsonStr){
-		return formatJson(jsonStr);
+	public static String getJsonFormatString(Object jsonStr){
+		if(null==jsonStr) return "";
+		return formatJson(jsonStr.toString());
 	}
     public static String formatJson(String jsonStr) {
         if (null == jsonStr || "".equals(jsonStr)) return "";

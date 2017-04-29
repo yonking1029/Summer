@@ -92,5 +92,12 @@ public class JpaUserServiceImpl implements JpaUserService {
 		this.save(new UserVo("我就是要测试一下我如果输入的名字很长，下面那条数据会不会保存成功", 16, 175.5));
 		this.save(new UserVo("name2", 15, 180.00));
 	}
+
+//	@Override
+//	public List list() {
+//		// TODO Auto-generated method stub
+//		return userJpaRepository.listBySQL("from t_user");
+//		
+//	}
     
 }

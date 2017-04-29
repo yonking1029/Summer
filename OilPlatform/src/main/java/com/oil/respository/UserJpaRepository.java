@@ -2,7 +2,6 @@ package com.oil.respository;
 
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -18,8 +17,7 @@ import com.oil.entitys.User;
  * @since JDK 1.7.0
  */
 @CacheConfig(cacheNames = "users")
-public interface UserJpaRepository extends JpaRepository<User, Long> {
-
+public interface UserJpaRepository extends BaseRepository<User, Long> {
 	/**
 	 * 启用缓存，condition 第1个参数如果大于50，不加入缓存
 	 * @author Leejean <br>
@@ -36,7 +34,9 @@ public interface UserJpaRepository extends JpaRepository<User, Long> {
     @Query("from User u where u.name=:name")
     User findUser(@Param("name") String name);
 
+    
     @Query("from User u where u.id=:id")
+    @Cacheable(key = "#p0", condition = "#p0 >0 ")
     User findUserById(@Param("id") Long id);
 
 }
