@@ -15,9 +15,9 @@ import com.oil.respository.BaseRepositoryFactoryBean;
  */
 @SpringBootApplication
 @EnableCaching //启用缓存
- @EnableJpaRepositories(basePackages = {"com.oil"},
-         repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class//指定自己的工厂类
- )
+@EnableJpaRepositories(basePackages = {"com.oil"},
+       repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class//指定自己的工厂类
+)
 public class Application {
 
 	public static void main(String[] args) {

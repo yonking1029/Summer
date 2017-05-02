@@ -2,6 +2,7 @@ package com.oil.respository;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -18,10 +19,9 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
         super(domainClass, entityManager);
         this.entityManager = entityManager;
     }
-    //通过EntityManager来完成查询
-    @Override
-    public List<Object[]> listBySQL(String sql) {
-        return entityManager.createNativeQuery(sql).getResultList();
-    }
+	@Override
+	public List<T> find(String sql, Map<String, Object> params) {
+		return null;
+	}
 }
 
