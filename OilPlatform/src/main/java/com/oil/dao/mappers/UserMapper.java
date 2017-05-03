@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 
 import com.oil.dao.entitys.User;
+import com.oil.models.UserVo;
 @Mapper
 @CacheConfig(cacheNames = "users")
 public interface UserMapper {
@@ -56,5 +57,9 @@ public interface UserMapper {
      * @return
      */
     List<User> findByParams(User user);
+    
+	List<User> findUserByPage(@Param("page") Integer page,@Param("pagesize") Integer pagesize,UserVo user);
+    
+    Integer findUserByPageCount(UserVo user);
 }
 

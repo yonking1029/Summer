@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import com.oil.comm.dto.PageDTO;
 import com.oil.dao.entitys.User;
 import com.oil.dao.mappers.UserMapper;
 import com.oil.models.UserVo;
@@ -91,12 +92,8 @@ public class UserServiceImpl implements UserService {
 		}
 		return userVos;
 	}
-
-//	@Override
-//	public List list() {
-//		// TODO Auto-generated method stub
-//		return userJpaRepository.listBySQL("from t_user");
-//		
-//	}
-    
+	@Override
+	public PageDTO<User> findUserByPage(Integer page, Integer pagesize, UserVo user) {
+		return new PageDTO<User>(page, pagesize, userMapper.findUserByPageCount(user), userMapper.findUserByPage(page, pagesize, user));
+	}
 }

@@ -35,10 +35,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                id = #{id}
            </where>
 	</update>
-	<if test="pojo.begintime!=null and pojo.begintime!=''">
-	<!-- <![CDATA[and DATE_FORMAT(tr.summary_date, '%Y-%m-%d')>=  DATE_FORMAT(#{pojo.begintime}, '%Y-%m-%d')]]>
-	</if>
-	<if test="pojo.endtime!=null and pojo.endtime!=''">
-	<![CDATA[and DATE_FORMAT(tr.summary_date, '%Y-%m-%d') <= DATE_FORMAT(#{pojo.endtime}, '%Y-%m-%d')]]>
-	</if> -->
+	<!-- 分页SQL语句 -->  
+	<select id="findUserByPage" parameterType="com.oil.dao.entitys.User" resultType="com.oil.dao.entitys.User">  
+	  select   
+	  *  
+	  from user limit #{page},#{pagesize}   
+	</select>  
+	<!-- 取得记录的总数 -->  
+	<select id="findUserByPageCount" resultType="Integer">  
+	  SELECT COUNT(*) FROM  user   
+	</select> 
 </mapper>

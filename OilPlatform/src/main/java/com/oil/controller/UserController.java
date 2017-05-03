@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oil.comm.dto.PageDTO;
 import com.oil.comm.dto.ReturnDTO;
+import com.oil.dao.entitys.User;
 import com.oil.models.UserVo;
 import com.oil.services.UserService;
 
@@ -45,6 +47,17 @@ public class UserController extends BaseController{
     public ReturnDTO findByParams(@RequestBody UserVo user) {
     	List<UserVo> userVos= userService.findByParams(user);
     	return ReturnDTO.Success(userVos);
+    }
+    @ApiOperation(value="获取用户列表ByPage", notes="获取用户列表ByParams")
+    @RequestMapping(value= "findUserByPage", method={RequestMethod.POST,RequestMethod.GET})
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", value = "当前页", required = true, dataType = "Integer",paramType = "query"),
+        @ApiImplicitParam(name = "pagesize", value = "页大小", required = true, dataType = "Integer",paramType = "query"),
+        @ApiImplicitParam(name = "user", value = "用户详细实体user", dataType = "UserVo")
+    })
+    public ReturnDTO findUserByPage(@RequestParam Integer page,@RequestParam Integer pagesize,@RequestBody UserVo user) {
+    	PageDTO<User> pageDTO = userService.findUserByPage(page, pagesize, user);
+    	return ReturnDTO.Success(pageDTO.toSimplePageDTO());
     }
 //    @ApiOperation(value="获取用户列表", notes="获取用户列表")
 //    @RequestMapping(value= "list", method=RequestMethod.GET)

@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.oil.comm.dto.PageDTO;
+import com.oil.dao.entitys.User;
 import com.oil.models.UserVo;
 
 /**
@@ -34,4 +36,5 @@ public interface UserService {
 //	List list();
 	List<UserVo> findByParams(UserVo user);
 
+	PageDTO<User> findUserByPage(Integer page,Integer pagesize,UserVo user);
 }
