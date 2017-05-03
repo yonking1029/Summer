@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oil.dao.mappers.UserMapper">
+    <select id="findByParams"
+            parameterType="com.oil.dao.entitys.User"
+            resultType="com.oil.dao.entitys.User" >
+        <![CDATA[
+            select
+                *
+            from
+                user
+        ]]>
+        <where>
+            <if test="id != null">and id = #{id}</if>
+            <if test="name != null">and name LIKE concat(concat('%',#{name}),'%')</if>
+        </where>
+        
+    </select>
+    <update id="updateUser" parameterType="com.oil.dao.entitys.User">
+           update user set
+           <trim prefix="set" suffixOverrides=","> 
+	           <if test="name != null">
+	               name = #{name},
+	           </if> 
+	           <if test="password != null">
+	               height = #{height},
+	           </if> 
+	           <if test="age != null">
+	               age = #{age},
+	           </if> 
+           </trim>
+           <where>
+               id = #{id}
+           </where>
+	</update>
+	<!-- 分页SQL语句 -->  
+	<select id="findUserByPage" parameterType="com.oil.dao.entitys.User" resultType="com.oil.dao.entitys.User">  
+	  select   
+	  *  
+	  from user limit #{page},#{pagesize}   
+	</select>  
+	<!-- 取得记录的总数 -->  
+	<select id="findUserByPageCount" resultType="Integer">  
+	  SELECT COUNT(*) FROM  user   
+	</select> 
+</mapper>

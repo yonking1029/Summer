@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.oil.comm.dto.PageDTO;
+import com.oil.dao.entitys.User;
 import com.oil.models.UserVo;
 
 /**
@@ -16,13 +18,9 @@ import com.oil.models.UserVo;
  * @see 
  * @since JDK 1.7.0
  */
-public interface JpaUserService {
+public interface UserService {
 
 	UserVo findByName(String name);
-
-	UserVo findByNameAndAge(String name, Integer age);
-
-    UserVo findUser(String name);
 
     UserVo findUserById(Long id);
 
@@ -36,5 +34,7 @@ public interface JpaUserService {
 	void testTransaction();
 	
 //	List list();
+	List<UserVo> findByParams(UserVo user);
 
+	PageDTO<User> findUserByPage(Integer page,Integer pagesize,UserVo user);
 }

@@ -2,14 +2,17 @@ package com.oil.services;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import com.oil.entitys.User;
+import com.oil.comm.dto.PageDTO;
+import com.oil.dao.entitys.User;
+import com.oil.dao.mappers.UserMapper;
 import com.oil.models.UserVo;
-import com.oil.respository.UserJpaRepository;
 
 /**
  * 
@@ -20,43 +23,27 @@ import com.oil.respository.UserJpaRepository;
  * @since JDK 1.7.0
  */
 @Service
-public class JpaUserServiceImpl implements JpaUserService {
-
+public class UserServiceImpl implements UserService {
+	private Logger logger =  Logger.getLogger(this.getClass());
     @Autowired
-    private UserJpaRepository userJpaRepository;
+    private UserMapper userMapper;
 
 	@Override
 	public UserVo findByName(String name) {
 		UserVo userVo = new UserVo();
-		BeanUtils.copyProperties(this.userJpaRepository.findByName(name), userVo);
+		BeanUtils.copyProperties(this.userMapper.findByName(name), userVo);
 		return userVo;
 	}
-
-	@Override
-	public UserVo findByNameAndAge(String name, Integer age) {
-		UserVo userVo = new UserVo();
-		BeanUtils.copyProperties(this.userJpaRepository.findByNameAndAge(name, age), userVo);
-		return userVo;
-	}
-
-	@Override
-	public UserVo findUser(String name) {
-		UserVo userVo = new UserVo();
-		BeanUtils.copyProperties(this.userJpaRepository.findUser(name), userVo);
-		return userVo;
-		
-	}
-
 	@Override
 	public UserVo findUserById(Long id) {
 		UserVo userVo = new UserVo();
-		BeanUtils.copyProperties(this.userJpaRepository.findUserById(id), userVo);
+		BeanUtils.copyProperties(this.userMapper.findById(id), userVo);
 		return userVo;
 	}
 
 	@Override
 	public List<UserVo> findAll() {
-		List<User> findAll = this.userJpaRepository.findAll();
+		List<User> findAll = this.userMapper.findAll();
 		UserVo userVo = null;
 		List<UserVo> userVos = Lists.newArrayList();
 		for (User user : findAll) {
@@ -74,15 +61,14 @@ public class JpaUserServiceImpl implements JpaUserService {
 		
 		BeanUtils.copyProperties(userVo, user);
 		
-		user = this.userJpaRepository.save(user);
-		
+		this.userMapper.save(user);
 				
 		return this.findUserById(user.getId());
 	}
 
 	@Override
 	public Long delete(Long id) {
-		this.userJpaRepository.delete(id);
+		this.userMapper.delete(id);
 		return id;
 	}
 
@@ -92,12 +78,22 @@ public class JpaUserServiceImpl implements JpaUserService {
 		this.save(new UserVo("我就是要测试一下我如果输入的名字很长，下面那条数据会不会保存成功", 16, 175.5));
 		this.save(new UserVo("name2", 15, 180.00));
 	}
-
-//	@Override
-//	public List list() {
-//		// TODO Auto-generated method stub
-//		return userJpaRepository.listBySQL("from t_user");
-//		
-//	}
-    
+	@Override
+	public List<UserVo> findByParams(UserVo userVo) {
+		User user = new User();
+		BeanUtils.copyProperties(userVo, user);
+		logger.info(JSON.toJSONString(user));
+		List<User> findAll = userMapper.findByParams(user);
+		List<UserVo> userVos = Lists.newArrayList();
+		for (User user2 : findAll) {
+			userVo = new UserVo();
+			BeanUtils.copyProperties(user2, userVo);
+			userVos.add(userVo);
+		}
+		return userVos;
+	}
+	@Override
+	public PageDTO<User> findUserByPage(Integer page, Integer pagesize, UserVo user) {
+		return new PageDTO<User>(page, pagesize, userMapper.findUserByPageCount(user), userMapper.findUserByPage(page, pagesize, user));
+	}
 }
