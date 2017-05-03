@@ -3,9 +3,6 @@ package com.oil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-import com.oil.respository.BaseRepositoryFactoryBean;
 /**
  * TODO 程序启动类.<br>
  * @author Leejean <br>
@@ -15,9 +12,6 @@ import com.oil.respository.BaseRepositoryFactoryBean;
  */
 @SpringBootApplication
 @EnableCaching //启用缓存
-@EnableJpaRepositories(basePackages = {"com.oil"},
-       repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class//指定自己的工厂类
-)
 public class Application {
 
 	public static void main(String[] args) {

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oil.comm.dto.ReturnDTO;
 import com.oil.models.UserVo;
-import com.oil.services.JpaUserService;
+import com.oil.services.UserService;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -31,13 +31,20 @@ import io.swagger.annotations.ApiOperation;
 public class UserController extends BaseController{
 
 	@Autowired
-	private JpaUserService userService;
+	private UserService userService;
 	
     @ApiOperation(value="获取用户列表", notes="获取用户列表")
     @RequestMapping(value= "getUserList", method=RequestMethod.GET)
     public ReturnDTO getUserList() {
     	List<UserVo> userVos= userService.findAll();
         return ReturnDTO.Success(userVos);
+    }
+    @ApiOperation(value="获取用户列表ByParams", notes="获取用户列表ByParams")
+    @RequestMapping(value= "findByParams", method=RequestMethod.POST)
+    @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "UserVo")
+    public ReturnDTO findByParams(@RequestBody UserVo user) {
+    	List<UserVo> userVos= userService.findByParams(user);
+    	return ReturnDTO.Success(userVos);
     }
 //    @ApiOperation(value="获取用户列表", notes="获取用户列表")
 //    @RequestMapping(value= "list", method=RequestMethod.GET)

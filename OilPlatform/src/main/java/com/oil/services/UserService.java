@@ -16,13 +16,9 @@ import com.oil.models.UserVo;
  * @see 
  * @since JDK 1.7.0
  */
-public interface JpaUserService {
+public interface UserService {
 
 	UserVo findByName(String name);
-
-	UserVo findByNameAndAge(String name, Integer age);
-
-    UserVo findUser(String name);
 
     UserVo findUserById(Long id);
 
@@ -36,5 +32,6 @@ public interface JpaUserService {
 	void testTransaction();
 	
 //	List list();
+	List<UserVo> findByParams(UserVo user);
 
 }
